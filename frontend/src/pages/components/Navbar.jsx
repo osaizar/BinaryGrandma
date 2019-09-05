@@ -13,7 +13,7 @@ export default class NavbarComponent extends Component {
   render(){
     return(
     <Navbar bg="light" expand="lg">
-    <Navbar.Brand href="/">MalCMP</Navbar.Brand>
+    <Navbar.Brand href="/">Binary Grandma</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
