@@ -50,9 +50,7 @@ export default class BinaryResultsPanel extends Component {
   render(){
     if (this.state.results.length != 0){
       var showing = this.state.results;
-      console.log(showing);
       showing = showing.sort((a,b) =>  b.score - a.score);
-      console.log(showing);
       showing = showing.slice(0,this.state.limit);
 
       return(

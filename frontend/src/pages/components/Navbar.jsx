@@ -22,6 +22,11 @@ export default class NavbarComponent extends Component {
           <Nav.Link href="/browse">Browse</Nav.Link>
         </Nav>
       </Navbar.Collapse>
+      <Navbar.Collapse className="justify-content-end">
+        <Nav>
+          <Nav.Link className="mr-auto" href="/jobs">Jobs</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
     );
   }

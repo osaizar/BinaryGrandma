@@ -67,3 +67,27 @@ class Result(Base):
     def serialize(self):
         return {"id" : self.id, "binary" : self.binary, "model" : self.model, \
                 "score" : self.score}
+
+class Job(Base):
+    __tablename__ = "jobs"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    start_time = Column(DateTime, default=datetime.datetime.utcnow)
+    end_time = Column(DateTime)
+    ended = Column(Boolean, default=False)
+    name = Column(String(255))
+    log = Column(String(1000))
+
+
+    def __init__(self, name):
+        self.name = name
+        self.log = ""
+        self.add_log("Job started")
+
+
+    def add_log(self, msg):
+        self.log += "[{}] {}\n".format(datetime.datetime.utcnow().strftime("%Y/%m/%d %H:%M:%S"), msg)
+
+
+    def serialize(self):
+        return {"id" : self.id, "start_time" : self.start_time.strftime("%Y/%m/%d %H:%M:%S"), "end_time" : self.end_time.strftime("%Y/%m/%d %H:%M:%S"),
+                "ended" : str(self.ended), "name" : self.name, "log" : self.log}

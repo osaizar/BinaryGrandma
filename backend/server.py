@@ -122,6 +122,28 @@ def get_results(binary_id):
         abort(500)
 
 
+@app.route('/ajax/get_jobs', methods=["GET"])
+def get_jobs():
+    try:
+        db = DB()
+        jobs = db.get_jobs()
+        return jsonify({"jobs" : [j.serialize() for j in jobs]}), 200
+    except Exception as e:
+        print(e)
+        abort(500)
+
+
+@app.route('/ajax/get_running_jobs', methods=["GET"])
+def get_running_jobs():
+    try:
+        db = DB()
+        jobs = db.get_running_jobs()
+        return jsonify({"jobs" : [j.serialize() for j in jobs]}), 200
+    except Exception as e:
+        print(e)
+        abort(500)
+
+
 @app.route('/ajax/create_model', methods=["POST"])
 @validate_json
 def create_model():
