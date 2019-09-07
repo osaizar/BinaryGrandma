@@ -89,5 +89,8 @@ class Job(Base):
 
 
     def serialize(self):
-        return {"id" : self.id, "start_time" : self.start_time.strftime("%Y/%m/%d %H:%M:%S"), "end_time" : self.end_time.strftime("%Y/%m/%d %H:%M:%S"),
+        rt = {"id" : self.id, "start_time" : self.start_time.strftime("%Y/%m/%d %H:%M:%S"),
                 "ended" : str(self.ended), "name" : self.name, "log" : self.log}
+        if self.end_time != None:
+            rt["end_time"] = self.end_time.strftime("%Y/%m/%d %H:%M:%S")
+        return rt
