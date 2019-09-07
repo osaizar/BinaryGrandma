@@ -11,14 +11,22 @@ export default class Pentagon extends Component {
   }
 
   componentDidMount(){
-    pentagon(this.props.results);
+    if (this.props.results.length != 0){
+      pentagon(this.props.results);
+    }
+  }
+
+  componentDidUpdate(){
+    if (this.props.results.length != 0){
+      pentagon(this.props.results);
+    }
   }
 
   render(){
     return(
       <Container className="container-canvas-main">
         <div className="container-canvas">
-          <canvas id="pentagonCanvas" width="800px" height="450px"></canvas>
+          <canvas id="pentagonCanvas" width="800px" height="800px"></canvas>
         </div>
       </Container>
     );

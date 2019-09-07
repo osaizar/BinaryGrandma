@@ -13,7 +13,7 @@ export default class Loading extends Component {
   render(){
     return(
       <Container>
-        <Image src="img/loading.svg" fluid className="align-self-center"></Image>
+        <Image src="img/loading.gif" fluid className="align-self-center"></Image>
         <h4>{this.props.text}</h4>
       </Container>
     );

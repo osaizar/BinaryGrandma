@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBackward } from "@fortawesome/free-solid-svg-icons";
 
-import BinaryResultsTable from './components/BinaryResultsTable';
+import BinaryResultsPanel from './components/BinaryResultsPanel';
 import Loading from './components/Loading';
 
 
@@ -43,7 +43,7 @@ export default class BinaryPage extends Component {
               <Card.Subtitle>Hash: {this.state.binary.hash}</Card.Subtitle>
             </Card.Header>
             <Card.Body>
-              <BinaryResultsTable binary={this.state.binary}/>
+              <BinaryResultsPanel binary={this.state.binary}/>
             </Card.Body>
           </Card>
         </Container>

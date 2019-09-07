@@ -17,6 +17,34 @@ ADDR = "0.0.0.0"
 app = Flask(__name__)
 CORS(app)
 
+# Helping functions
+def parse_results(results):
+    rt = []
+    scores = []
+    for r in results:
+        if str(r.score) == "-inf":
+            r.score = 1
+        scores.append(r.score)
+
+    smin = min(scores)
+    smin = (smin * -1) + 1
+    scores = []
+    for r in results:
+        if r.score == 1:
+            r.score = 0
+        else:
+            r.score += smin
+        scores.append(r.score)
+
+    smax = max(scores)
+    for r in results:
+        if r.score != 0:
+            r.score = r.score * 95 / smax
+
+    return results
+
+
+
 # Main App route:
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -78,13 +106,17 @@ def get_binary(binary_id):
 def get_results(binary_id):
     try:
         db = DB()
-        results = db.get_results_by_binary_id(binary_id)
         rt = []
-        for r in results:
-            m = db.get_model_by_id(r.model)
-            rt.append({"model" : m.name, "score" : str(r.score)})
+        results = db.get_results_by_binary_id(binary_id)
+        model_n = len(db.get_available_models())
 
-        return jsonify({"results" : rt}), 200
+        if len(results) != 0:
+            results = parse_results(results)
+            for r in results:
+                m = db.get_model_by_id(r.model)
+                rt.append({"model" : m.name, "score" : str(int(r.score))})
+
+        return jsonify({"results" : rt, "models" : model_n}), 200
     except Exception as e:
         print(e)
         abort(500)

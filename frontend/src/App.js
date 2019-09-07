@@ -15,7 +15,7 @@ export default function App() {
   return (
     <div>
       <Navbar/>
-      <Container style={{"margin-top" : "3em"}}>
+      <Container style={{"marginTop" : "3em"}}>
         <Switch>
           <Route exact path="/" component={UploadBinaryPage} />
           <Route exact path="/upload_model" component={UploadModelPage} />

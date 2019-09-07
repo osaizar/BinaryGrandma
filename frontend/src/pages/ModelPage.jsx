@@ -36,11 +36,6 @@ export default class ModelPage extends Component {
 
   render(){
     if (this.state.loaded){
-      var results = [{"name" : "model1", "value" : 34}, {"name" : "model2", "value" : 92},
-                     {"name" : "model3", "value" : 54}, {"name" : "model4", "value" : 4},
-                     {"name" : "model5", "value" : 12}, {"name" : "model6", "value" : 90},
-                     {"name" : "model8", "value" : 98}, {"name" : "model7", "value" : 80},
-                    ];
       return(
         <Container>
           <Card>
@@ -50,7 +45,7 @@ export default class ModelPage extends Component {
               <Card.Subtitle>{this.state.model.desc}</Card.Subtitle>
             </Card.Header>
             <Card.Body>
-              <Pentagon results={results}/>
+              <h4>Fill this please</h4>
             </Card.Body>
           </Card>
         </Container>

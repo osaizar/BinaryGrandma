@@ -1,14 +1,12 @@
 // onload function, so Lato loads before the program starts
 // from: https://codepen.io/semibran/pen/NPOGdd
 
-// var binary_data = [{"name" : "model1", "value" : 34}, {"name" : "model2", "value" : 92}, {"name" : "model3", "value" : 54}];
-
 export default function main(binary_data){
   var binary = {};
   var statColors = {};
   binary_data.map(i => {
-    binary[i.name] = i.value;
-    statColors[i.name] = "#999933";
+    binary[i.model] = i.score;
+    statColors[i.model] = "#DF691A";
   });
 
   // Array that takes information from the binary object to get the order
@@ -17,12 +15,19 @@ export default function main(binary_data){
   var statOrder = [];
   for(var i in binary)statOrder.push(i);
 
+  // Place canvas object centered in the screen.
+  var canvas = document.getElementById("pentagonCanvas");
+
+  // Get canvas context.
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   // Define pentagon (or other polygon) size and coordinates.
-  var polygonX = 240;
-  var polygonY = 240;
-  var polygonSize = 120;
+  var polygonX = canvas.width/2;
+  var polygonY = canvas.height/2;
+  var polygonSize = 220;
   // Define size of circles.
-  var circleSize = 56;
+  var circleSize = 75;
   var circles = [];
   var circleIndexes = [];
   for(var i in statColors)circleIndexes.push({defaultColor: statColors[i], color: statColors[i], over: false});
@@ -41,8 +46,7 @@ export default function main(binary_data){
     parent.appendChild(element);
     return element;
   }
-  // Place canvas object centered in the screen.
-  var canvas= document.getElementById("pentagonCanvas");
+
   /*
   var canvas = appendElement("canvas", {
     width: "480",
@@ -50,9 +54,6 @@ export default function main(binary_data){
     class: "absolute-center",
   });
   */
-
-  // Get canvas context.
-  var ctx = canvas.getContext("2d");
 
   String.prototype.toRGB = function(){
     var obj;
@@ -189,12 +190,12 @@ export default function main(binary_data){
       y = vertices[index].y+Math.sin(vertices[index].radians)*(circleSize+8);
       ctx.beginPath();
       ctx.arc(x, y, circleSize, 0, 2 * Math.PI, false);
-      ctx.fillStyle = '#333';
+      ctx.fillStyle = '#222';
       ctx.fill();
       ctx.closePath();
       ctx.beginPath();
       ctx.arc(x, y, circleSize-4, 0, 2 * Math.PI, false);
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = "#222";
       if(circleIndexes[index].over)ctx.fillStyle = statColors[statOrder[index]];
       ctx.fill();
       ctx.closePath();
@@ -209,9 +210,10 @@ export default function main(binary_data){
       if(circleIndexes[index].over)ctx.fillStyle = statColors[statOrder[index]];
       ctx.font = "16px Lato";
       text = statOrder[index].toUpperCase();
-      stat = binary[statOrder[index]]+"%";
-      ctx.fillText(text, x-ctx.measureText(text).width/2, y);
-      ctx.fillText(stat, x-ctx.measureText(stat).width/2, y+16);
+      text = text.substring(0,18);
+      //stat = binary[statOrder[index]]+"%";
+      ctx.fillText(text, x-ctx.measureText(text).width/2, y+8);
+      //ctx.fillText(stat, x-ctx.measureText(stat).width/2, y+16);
     }
   }
   redraw();
