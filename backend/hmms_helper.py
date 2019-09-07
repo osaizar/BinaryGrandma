@@ -35,7 +35,7 @@ def create_model_thr(model_id):
     os.system("mkdir {}".format(bin_path))
     os.system("mkdir {}".format(model_path))
     os.system("mkdir {}".format(diss_path))
-    os.system("unzip {} -d {} > /bin/false".format(bin_path+".zip", bin_path))
+    os.system("unzip {} -d {} > /dev/null".format(bin_path+".zip", bin_path))
     bin_files = os.listdir(bin_path)
 
     for i, binf in enumerate(bin_files):
