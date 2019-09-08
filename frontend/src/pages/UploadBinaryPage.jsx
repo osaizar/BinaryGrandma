@@ -40,14 +40,14 @@ export default class UploadBinaryPage extends Component {
   onClickButton = (event) => {
     event.preventDefault();
 
-    axios.post('http://localhost:5000/ajax/create_binary', { "name" : this.state.name })
+    axios.post('http://192.168.1.146:5000/ajax/create_binary', { "name" : this.state.name })
     .then(res => {
       if(res.status == 200){
         var binary = res.data.binary_id;
         this.setState({state : "uploading"})
         const data = new FormData();
         data.append('file', this.state.selectedFile);
-        axios.post('http://localhost:5000/ajax/upload_binary_file/'+binary, data)
+        axios.post('http://192.168.1.146:5000/ajax/upload_binary_file/'+binary, data)
         .then(res => {
           if (res.status == 200){
             this.setState({state : "done", name : "",  selectedFile : null, binary_id : binary});

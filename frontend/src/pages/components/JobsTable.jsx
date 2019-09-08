@@ -34,7 +34,7 @@ export default class JobsTable extends Component {
   }
 
   getAllJobs = () => {
-    axios.get('http://localhost:5000/ajax/get_jobs')
+    axios.get('http://192.168.1.146:5000/ajax/get_jobs')
     .then(res => {
       if(res.status == 200){
         this.setState({jobs : res.data.jobs});
@@ -43,7 +43,7 @@ export default class JobsTable extends Component {
   }
 
   getRunningJobs = () => {
-    axios.get('http://localhost:5000/ajax/get_running_jobs')
+    axios.get('http://192.168.1.146:5000/ajax/get_running_jobs')
     .then(res => {
       if(res.status == 200){
         if (res.data.jobs.length != 0){
@@ -86,7 +86,7 @@ export default class JobsTable extends Component {
     log = log.split("\n");
     log.pop();
     return(
-      <Table triped bordered hover responsive>
+      <Table triped bordered size={"sm"} responsive className="table-sm">
         <tbody>
           {
             log.map(l => (

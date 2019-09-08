@@ -26,7 +26,7 @@ export default class ModelPage extends Component {
   componentWillMount(){
     const model_id = this.props.match.params.id;
 
-    axios.get('http://localhost:5000/ajax/get_model/'+model_id)
+    axios.get('http://192.168.1.146:5000/ajax/get_model/'+model_id)
     .then(res => {
       if (res.status == 200){
         this.setState({model : res.data.model, loaded : true});

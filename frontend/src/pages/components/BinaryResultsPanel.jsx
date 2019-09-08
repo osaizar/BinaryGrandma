@@ -21,7 +21,7 @@ export default class BinaryResultsPanel extends Component {
   }
 
   updateResults = () => {
-    axios.get('http://localhost:5000/ajax/get_results/'+this.props.binary.id)
+    axios.get('http://192.168.1.146:5000/ajax/get_results/'+this.props.binary.id)
     .then(res => {
       if(res.status == 200){
         if (res.data.models > res.data.results.length){

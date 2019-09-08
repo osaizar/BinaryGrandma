@@ -14,7 +14,7 @@ export default class BrowseBinaryTable extends Component {
   }
 
   componentWillMount(){
-    axios.get('http://localhost:5000/ajax/get_binaries')
+    axios.get('http://192.168.1.146:5000/ajax/get_binaries')
     .then(res => {
       if(res.status == 200){
         this.setState({binaries : res.data.binaries})
