@@ -11,6 +11,8 @@ import { faBackward } from "@fortawesome/free-solid-svg-icons";
 import BinaryResultsPanel from './components/BinaryResultsPanel';
 import Loading from './components/Loading';
 
+import {REMOTE_SERVER} from '../config.js';
+
 
 export default class BinaryPage extends Component {
   constructor(props){
@@ -24,7 +26,7 @@ export default class BinaryPage extends Component {
   componentWillMount(){
     const binary_id = this.props.match.params.id;
 
-    axios.get('http://192.168.1.146:5000/ajax/get_binary/'+binary_id)
+    axios.get(REMOTE_SERVER+'/ajax/get_binary/'+binary_id)
     .then(res => {
       if (res.status == 200){
         this.setState({binary : res.data.binary, loaded : true});

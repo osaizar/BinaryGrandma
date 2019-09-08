@@ -13,6 +13,8 @@ import Loading from "./components/Loading";
 
 import Pentagon from "./components/Pentagon";
 
+import {REMOTE_SERVER} from '../config.js';
+
 
 export default class ModelPage extends Component {
   constructor(props){
@@ -26,7 +28,7 @@ export default class ModelPage extends Component {
   componentWillMount(){
     const model_id = this.props.match.params.id;
 
-    axios.get('http://192.168.1.146:5000/ajax/get_model/'+model_id)
+    axios.get(REMOTE_SERVER+'/ajax/get_model/'+model_id)
     .then(res => {
       if (res.status == 200){
         this.setState({model : res.data.model, loaded : true});

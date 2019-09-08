@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Pentagon from './Pentagon';
 import Loading from './Loading';
 
+import {REMOTE_SERVER} from '../../config.js';
+
 export default class BinaryResultsPanel extends Component {
   constructor(props){
     super(props);
@@ -21,7 +23,7 @@ export default class BinaryResultsPanel extends Component {
   }
 
   updateResults = () => {
-    axios.get('http://192.168.1.146:5000/ajax/get_results/'+this.props.binary.id)
+    axios.get(REMOTE_SERVER+'/ajax/get_results/'+this.props.binary.id)
     .then(res => {
       if(res.status == 200){
         if (res.data.models > res.data.results.length){

@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import Table from 'react-bootstrap/Table';
 
+import {REMOTE_SERVER} from '../../config.js';
+
 
 export default class JobsTable extends Component {
   constructor(props){
@@ -34,7 +36,7 @@ export default class JobsTable extends Component {
   }
 
   getAllJobs = () => {
-    axios.get('http://localhost:5000/ajax/get_jobs')
+    axios.get(REMOTE_SERVER+'/ajax/get_jobs')
     .then(res => {
       if(res.status == 200){
         this.setState({jobs : res.data.jobs});
@@ -43,7 +45,7 @@ export default class JobsTable extends Component {
   }
 
   getRunningJobs = () => {
-    axios.get('http://localhost:5000/ajax/get_running_jobs')
+    axios.get(REMOTE_SERVER+'/ajax/get_running_jobs')
     .then(res => {
       if(res.status == 200){
         if (res.data.jobs.length != 0){
