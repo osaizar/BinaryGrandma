@@ -39,7 +39,7 @@ def create_model_thr(model_id):
     bin_files = os.listdir(bin_path)
 
     for i, binf in enumerate(bin_files):
-        db.job_add_log(job.id, "Disassembling file {}/{}".format(len(bin_file), i+1))
+        db.job_add_log(job.id, "Disassembling file {}/{}".format(len(bin_files), i+1))
         Disassembler(os.path.join(bin_path, binf)).disassemble_to_file(os.path.join(diss_path, str(i)+".json"))
 
     db.job_add_log(job.id, "Creating map")
