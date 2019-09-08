@@ -11,6 +11,7 @@ import { faFileArchive } from "@fortawesome/free-solid-svg-icons";
 
 import Loading from "./components/Loading";
 
+import {REMOTE_SERVER} from '../config.js';
 
 export default class UploadModelPage extends Component {
   constructor(props){
@@ -57,14 +58,14 @@ export default class UploadModelPage extends Component {
 
   onClickButton = (event) => {
     event.preventDefault();
-    axios.post('http://192.168.1.146:5000/ajax/create_model', { "name" : this.state.name, "desc" : this.state.desc, "benign" : this.state.benign})
+    axios.post(REMOTE_SERVER+'/ajax/create_model', { "name" : this.state.name, "desc" : this.state.desc, "benign" : this.state.benign})
     .then(res => {
       if(res.status == 200){
         var model = res.data.model_id;
         this.setState({state : "uploading"})
         const data = new FormData();
         data.append('file', this.state.selectedFile);
-        axios.post('http://192.168.1.146:5000/ajax/upload_model_file/'+model, data)
+        axios.post(REMOTE_SERVER+'/ajax/upload_model_file/'+model, data)
         .then(res => {
           if (res.status == 200){
             this.setState({state : "done", name : "", desc : "", benign : false, selectedFile : null, model_id : model});

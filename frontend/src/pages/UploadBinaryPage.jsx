@@ -11,6 +11,8 @@ import { faFileUpload } from "@fortawesome/free-solid-svg-icons";
 
 import Loading from "./components/Loading"
 
+import {REMOTE_SERVER} from '../config.js';
+
 
 export default class UploadBinaryPage extends Component {
   constructor(props){
@@ -40,14 +42,14 @@ export default class UploadBinaryPage extends Component {
   onClickButton = (event) => {
     event.preventDefault();
 
-    axios.post('http://192.168.1.146:5000/ajax/create_binary', { "name" : this.state.name })
+    axios.post(REMOTE_SERVER+'/ajax/create_binary', { "name" : this.state.name })
     .then(res => {
       if(res.status == 200){
         var binary = res.data.binary_id;
         this.setState({state : "uploading"})
         const data = new FormData();
         data.append('file', this.state.selectedFile);
-        axios.post('http://192.168.1.146:5000/ajax/upload_binary_file/'+binary, data)
+        axios.post(REMOTE_SERVER+'/ajax/upload_binary_file/'+binary, data)
         .then(res => {
           if (res.status == 200){
             this.setState({state : "done", name : "",  selectedFile : null, binary_id : binary});

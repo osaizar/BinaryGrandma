@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import Table from 'react-bootstrap/Table';
 
+import {REMOTE_SERVER} from '../../config.js';
+
 
 export default class BrowseBinaryTable extends Component {
   constructor(props){
@@ -14,7 +16,7 @@ export default class BrowseBinaryTable extends Component {
   }
 
   componentWillMount(){
-    axios.get('http://192.168.1.146:5000/ajax/get_binaries')
+    axios.get(REMOTE_SERVER+'/ajax/get_binaries')
     .then(res => {
       if(res.status == 200){
         this.setState({binaries : res.data.binaries})
