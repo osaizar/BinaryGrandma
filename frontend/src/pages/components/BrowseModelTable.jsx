@@ -15,7 +15,7 @@ export default class BrowseModelTable extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     axios.get(REMOTE_SERVER+'/ajax/get_models')
     .then(res => {
       if(res.status == 200){

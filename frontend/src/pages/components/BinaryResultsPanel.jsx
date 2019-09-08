@@ -18,7 +18,7 @@ export default class BinaryResultsPanel extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.updateResults();
   }
 

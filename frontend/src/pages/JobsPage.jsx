@@ -15,7 +15,7 @@ export default class JobsPage extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     if (this.props.match.params.page){
       this.setState({selected : this.props.match.params.page});
     }

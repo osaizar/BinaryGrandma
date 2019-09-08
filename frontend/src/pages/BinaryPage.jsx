@@ -23,7 +23,7 @@ export default class BinaryPage extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     const binary_id = this.props.match.params.id;
 
     axios.get(REMOTE_SERVER+'/ajax/get_binary/'+binary_id)

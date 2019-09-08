@@ -25,7 +25,7 @@ export default class ModelPage extends Component {
     }
   }
 
-  componentWillMount(){
+  componentDidMount(){
     const model_id = this.props.match.params.id;
 
     axios.get(REMOTE_SERVER+'/ajax/get_model/'+model_id)

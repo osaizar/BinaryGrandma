@@ -88,17 +88,19 @@ export default class JobsTable extends Component {
     log = log.split("\n");
     log.pop();
     return(
-      <Table triped bordered size={"sm"} responsive className="table-sm">
-        <tbody>
-          {
-            log.map(l => (
-              <tr>
-                <th>{l}</th>
-              </tr>
-            ))
-          }
-        </tbody>
-      </Table>
+      <div style={{position: "relative",height: "200px", overflow: "auto"}}>
+        <Table bordered size={"sm"} className="table-sm">
+          <tbody>
+            {
+              log.map((l,i) => (
+                <tr>
+                  <th key={i}>{l}</th>
+                </tr>
+              ))
+            }
+          </tbody>
+        </Table>
+      </div>
     );
   }
 
@@ -115,7 +117,7 @@ export default class JobsTable extends Component {
 
   listAll = (e,i) => {
     return(
-      <tr key={i}>
+      <tr key={i} style={{"max-height" : "30px"}}>
         <th>{e.id}</th>
         <th>{e.name}</th>
         <th>{e.start_time}</th>
