@@ -37,17 +37,19 @@ class Binary(Base):
     name = Column(String(255), nullable=False)
     hash = Column(String(255))
     filename = Column(String(255))
+    analyzed = Column(Boolean)
     date = Column(DateTime, default=datetime.datetime.utcnow)
 
 
     def __init__(self, name):
         self.name = name
+        self.analyzed = False
         self.filename = string_generator()
 
 
     def serialize(self):
         return {"id" : self.id, "name" : self.name, "hash" : self.hash,
-                "date" : self.date}
+                "date" : self.date, "analyzed" : self.analyzed}
 
 
 class Result(Base):

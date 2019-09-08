@@ -87,6 +87,17 @@ class DB():
             return False
 
 
+    def set_binary_analyzed(self, binary_id):
+        try:
+            binary = self.get_binary_by_id(binary_id)
+            binary.analyzed = True
+            self.session.commit()
+            return True
+        except Exception as e:
+            print(traceback.format_exc())
+            return False
+
+
     # Result Functions
     def get_results_by_binary_id(self, binary_id):
         try:

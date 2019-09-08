@@ -84,6 +84,7 @@ def analyze_binary_thr(binary_id):
         db.add(Result(binary.id, m.id, rating))
 
     db.job_add_log(job.id, "Cleaning up the file mess")
+    db.set_binary_analyzed(binary.id)
     os.system("rm {}".format(bin_path))
     db.set_job_ended(job.id)
 

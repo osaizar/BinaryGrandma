@@ -26,7 +26,7 @@ export default class BinaryResultsPanel extends Component {
     axios.get(REMOTE_SERVER+'/ajax/get_results/'+this.props.binary.id)
     .then(res => {
       if(res.status == 200){
-        if (res.data.models > res.data.results.length){
+        if (!res.data.analyzed){
           setTimeout(this.updateResults, 500);
         }
 

@@ -107,8 +107,8 @@ def get_results(binary_id):
     try:
         db = DB()
         rt = []
-        results = db.get_results_by_binary_id(binary_id)
-        model_n = len(db.get_available_models())
+        binary = db.get_binary_by_id(binary_id)
+        results = db.get_results_by_binary_id(binary.id)
 
         if len(results) != 0:
             results = parse_results(results)
@@ -116,7 +116,7 @@ def get_results(binary_id):
                 m = db.get_model_by_id(r.model)
                 rt.append({"model" : m.name, "score" : str(int(r.score))})
 
-        return jsonify({"results" : rt, "models" : model_n}), 200
+        return jsonify({"results" : rt, "analyzed" : binary.analyzed}), 200
     except Exception as e:
         print(e)
         abort(500)
