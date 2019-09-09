@@ -15,11 +15,26 @@ def new_model(name, desc, benign, zipfile):
     hm.create_model(model.id)
 
 
+def new_binary(name, file):
+    db = DB()
+    binary = db.add(Binary(name))
+    cpdest = os.path.join(FILE_UPLOAD_FOLDER, binary.filename+".bin")
+    os.system("cp {} {}".format(file, cpdest))
+    hm.analyze_binary(binary.id)
 
 
 if __name__ == "__main__":
-    MODELS = [{"name" : "", "desc" : "", "benign" : True, "zipfile" : ""}]
+    # MODELS = [{"name" : "", "desc" : "", "benign" : True, "zipfile" : ""}]
+    MODELS = []
     for i, m in enumerate(MODELS):
         print("[+] Starting model {}/{}".format(i, len(MODELS)))
         new_model(m["name"], m["desc"], m["benign"], m["zipfile"])
-        print("[+] Endend model {}/{}".format(i, len(MODELS)))  
+        print("[+] Endend model {}/{}".format(i, len(MODELS)))
+
+
+    # BINARIES = [{"name" : "", "file" : ""}]
+    BINARIES = []
+    for i, m in enumerate(BINARIES):
+        print("[+] Starting binary {}/{}".format(i, len(BINARIES)))
+        new_binary(m["name"], m["file"])
+        print("[+] Endend binary {}/{}".format(i, len(BINARIES)))
