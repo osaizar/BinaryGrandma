@@ -1,11 +1,10 @@
 from models import *
 from config import *
 from db_helper import DB
-from hmm.disassembler import Disassembler
-from hmm.map_creator import MapCreator
-from hmm.model_creator import ModelCreator
-from hmm.model_comparator import ModelComparator
+import hmms_helper as hm
 import os
+import json
+import sys
 
 def new_model(name, desc, benign, zipfile):
     db = DB()
@@ -24,17 +23,19 @@ def new_binary(name, file):
 
 
 if __name__ == "__main__":
-    # MODELS = [{"name" : "", "desc" : "", "benign" : True, "zipfile" : ""}]
-    MODELS = []
-    for i, m in enumerate(MODELS):
-        print("[+] Starting model {}/{}".format(i, len(MODELS)))
+    if sys.argv[1] == "m" or sys.argv[1] == "model":
+        with open(sys.argv[2]) as f:
+            m = json.load(f)
         new_model(m["name"], m["desc"], m["benign"], m["zipfile"])
-        print("[+] Endend model {}/{}".format(i, len(MODELS)))
+    elif sys.argv[1] == "f" or sys.argv[1] == "file":
+        with open(sys.argv[2]) as f:
+            m = json.load(f)
 
-
-    # BINARIES = [{"name" : "", "file" : ""}]
-    BINARIES = []
-    for i, m in enumerate(BINARIES):
-        print("[+] Starting binary {}/{}".format(i, len(BINARIES)))
-        new_binary(m["name"], m["file"])
-        print("[+] Endend binary {}/{}".format(i, len(BINARIES)))
+        cpdest = os.path.join(FILE_UPLOAD_FOLDER, m["zipfile"])
+        bin_path = os.path.join(FILE_UPLOAD_FOLDER, m["name"])
+        os.system("mkdir {}".format(bin_path))
+        os.system("cp {} {}".format(m["zipfile"], cpdest))
+        os.system("unzip {} -d {} > /dev/null".format(cpdest, bin_path))
+        bin_files = os.listdir(bin_path)
+        for f in bin_files:
+            new_binary(m["name"], os.path.join(bin_path, f))
