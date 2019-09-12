@@ -11,7 +11,7 @@ def new_model(name, desc, benign, zipfile):
     model = db.add(Model(name, desc, benign))
     cpdest = os.path.join(FILE_UPLOAD_FOLDER, model.filename+".zip")
     os.system("cp {} {}".format(zipfile, cpdest))
-    hm.create_model(model.id)
+    hm.create_model_thr(model.id)
 
 
 def new_binary(name, file):
@@ -19,7 +19,7 @@ def new_binary(name, file):
     binary = db.add(Binary(name))
     cpdest = os.path.join(FILE_UPLOAD_FOLDER, binary.filename+".bin")
     os.system("cp {} {}".format(file, cpdest))
-    hm.analyze_binary(binary.id)
+    hm.analyze_binary_thr(binary.id)
 
 
 if __name__ == "__main__":
