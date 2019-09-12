@@ -31,8 +31,8 @@ if __name__ == "__main__":
         with open(sys.argv[2]) as f:
             m = json.load(f)
 
-        cpdest = os.path.join(FILE_UPLOAD_FOLDER, m["zipfile"])
-        bin_path = os.path.join(FILE_UPLOAD_FOLDER, m["name"])
+        cpdest = os.path.join(FILE_UPLOAD_FOLDER, m["zipfile"].split("/")[-1])
+        bin_path = os.path.join(FILE_UPLOAD_FOLDER, m["name"].replace(" ",""))
         os.system("mkdir {}".format(bin_path))
         os.system("cp {} {}".format(m["zipfile"], cpdest))
         os.system("unzip {} -d {} > /dev/null".format(cpdest, bin_path))
