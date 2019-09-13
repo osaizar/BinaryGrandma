@@ -55,11 +55,11 @@ if __name__ == "__main__":
     args = parse_args()
 
     if args.model:
-        with open(sys.argv[2]) as f:
+        with open(args.model) as f:
             m = json.load(f)
         new_model(m["name"], m["desc"], m["benign"], m["zipfile"])
     elif args.binary:
-        with open(sys.argv[2]) as f:
+        with open(args.binary) as f:
             m = json.load(f)
 
         cpdest = os.path.join(FILE_UPLOAD_FOLDER, m["zipfile"].split("/")[-1])
