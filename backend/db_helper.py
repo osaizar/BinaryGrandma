@@ -76,14 +76,14 @@ class DB():
             return None
 
 
-    def get_binaries_grouped_by_name():
+    def get_binary_names(self):
         try:
-            return self.session.query(Binary.name).group_by(Binary.name)
+            return self.session.query(Binary.name).group_by(Binary.name).all()
         except Exception as e:
             print(traceback.format_exc())
             return None
 
-    def get_binaries_by_name(name):
+    def get_binaries_by_name(self, name):
         try:
             return self.session.query(Binary).filter(Binary.name == name).all()
         except Exception as e:

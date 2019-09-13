@@ -9,7 +9,7 @@ import argparse
 import csv
 
 
-def parse_arguments():
+def parse_args():
     argparser = argparse.ArgumentParser(prog="gVuln", \
                 description="Binary Grandma CLI interface")
     argparser.add_argument("-m", "--model", help="Add a model.json file to create a model")
@@ -36,9 +36,35 @@ def new_binary(name, file):
     hm.analyze_binary_thr(binary.id)
 
 
+def parse_results(results):
+    rt = []
+    scores = []
+    for r in results:
+        if str(r.score) == "-inf":
+            r.score = 1
+        scores.append(r.score)
+
+    smin = min(scores)
+    smin = (smin * -1) + 1
+    scores = []
+    for r in results:
+        if r.score == 1:
+            r.score = 0
+        else:
+            r.score += smin
+        scores.append(r.score)
+
+    smax = max(scores)
+    for r in results:
+        if r.score != 0:
+            r.score = r.score * 95 / smax
+
+    return results
+
+
 def get_results(binary_id):
     db = DB()
-    results = []
+    res = []
     binary = db.get_binary_by_id(binary_id)
     results = db.get_results_by_binary_id(binary.id)
 
@@ -46,9 +72,9 @@ def get_results(binary_id):
         results = parse_results(results)
         for r in results:
             m = db.get_model_by_id(r.model)
-            results.append({"model" : m.name, "score" : str(int(r.score))})
+            res.append({"model" : m.name, "score" : str(int(r.score))})
 
-    return results
+    return res
 
 
 if __name__ == "__main__":
@@ -73,11 +99,19 @@ if __name__ == "__main__":
     elif args.csv:
         db = DB()
         binary_names = db.get_binary_names()
+        print("[+] {} binary types found".format(len(binary_names)))
         for bin_name in binary_names:
-            binaries = db.get_binaries_by_name(bin_name)
-            with open(os.path.join(args.csv, bin_name+".csv"), "w") as wfile:
+            binaries = db.get_binaries_by_name(bin_name[0])
+            print("[+] Writting to {}".format(os.path.join(args.csv, bin_name[0]+".csv")))
+            with open(os.path.join(args.csv, bin_name[0]+".csv"), "w") as wfile:
                 writer = csv.writer(wfile, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL )
+                writer.writerow([bin_name[0]])
                 for bin in binaries:
+                    rt = []
                     results = get_results(bin.id)
-                    results = ["{} ({})".format(r["model"], r["score"]) if int(r["score"]) > 60 for r in results]
-                    writer.writerow([str(bin.id), str(results)])
+                    for r in results:
+                        if int(r["score"]) > 60:
+                            rt.append((r["model"], int(r["score"])))
+                    if len(rt) > 0:
+                        out = sorted(rt, key=lambda k: k[1], reverse=True) 
+                        writer.writerow([str(bin.id), str(out)])
