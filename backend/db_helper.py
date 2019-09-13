@@ -76,6 +76,21 @@ class DB():
             return None
 
 
+    def get_binaries_grouped_by_name():
+        try:
+            return self.session.query(Binary.name).group_by(Binary.name)
+        except Exception as e:
+            print(traceback.format_exc())
+            return None
+
+    def get_binaries_by_name(name):
+        try:
+            return self.session.query(Binary).filter(Binary.name == name).all()
+        except Exception as e:
+            print(traceback.format_exc())
+            return None
+
+
     def binary_add_hash(self, binary_id, hash):
         try:
             binary = self.get_binary_by_id(binary_id)

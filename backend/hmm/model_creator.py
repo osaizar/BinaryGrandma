@@ -45,8 +45,8 @@ class ModelCreator():
                     v.append(self.map[ins])
                 else:
                     v.append(0) # other
-
-            joint["v"].append(v)
+            if len(v) != 0:
+                joint["v"].append(v)
 
         return joint
 
