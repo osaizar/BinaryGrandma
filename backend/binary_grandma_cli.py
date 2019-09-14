@@ -90,12 +90,17 @@ if __name__ == "__main__":
 
         cpdest = os.path.join(FILE_UPLOAD_FOLDER, m["zipfile"].split("/")[-1])
         bin_path = os.path.join(FILE_UPLOAD_FOLDER, m["name"].replace(" ",""))
-        os.system("mkdir {}".format(bin_path))
-        os.system("cp {} {}".format(m["zipfile"], cpdest))
-        os.system("unzip {} -d {} > /dev/null".format(cpdest, bin_path))
+        os.system("mkdir '{}'".format(bin_path))
+        os.system("cp '{}' '{}'".format(m["zipfile"], cpdest))
+        os.system("unzip '{}' -d '{}' > /dev/null".format(cpdest, bin_path))
         bin_files = os.listdir(bin_path)
         for f in bin_files:
-            new_binary(m["name"], os.path.join(bin_path, f))
+            try:
+                new_binary(m["name"], os.path.join(bin_path, f))
+            except:
+                pass
+        os.system("rm -rf {}".format(bin_path))
+        os.system("rm {}".format(cpdest))
     elif args.csv:
         db = DB()
         binary_names = db.get_binary_names()

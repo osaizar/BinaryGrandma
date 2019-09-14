@@ -18,7 +18,7 @@ class ModelComparator():
 
         for ins in j["v"]:
             if ins in self.map:
-                rt["v"].append(self.map[ins])
+                rt["v"].append(int(self.map[ins]))
             else:
                 rt["v"].append(0) # other
 
