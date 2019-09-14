@@ -29,6 +29,15 @@ class ModelCreator():
         dhmm_r.save_params(self.out_file)
 
 
+    def train_model(self):
+        inst_n = len(self.map)
+        V = [np.array(v) for v in self.indata["v"]]
+        print("[DEBUG] {} possible instructions, {} samples".format(inst_n, len(self.indata["v"])))
+        dhmm_r = hmms.DtHMM.from_file(self.out_file+".npz")
+        dhmm_r.baum_welch(V, ITERATIONS)
+        print("[DEBUG] Baum welch finished, saving file")
+        dhmm_r.save_params(self.out_file)
+
     def create_joint_json(self):
         files = listdir(self.in_path)
         jsons = []

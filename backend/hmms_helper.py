@@ -21,6 +21,25 @@ def get_file_sha_hash(file):
     return hasher.hexdigest()
 
 
+def train_model_thr(model_id, bin_path):
+    db = DB()
+    model = db.get_model_by_id(model_id)
+
+    model_path = os.path.join(MODEL_FOLDER, model.filename)
+    diss_path = os.path.join(model_path, "diss")
+    map_path = os.path.join(model_path, "map.json")
+    model_file_path = os.path.join(model_path, "model")
+    bin_files = os.listdir(bin_path)
+
+    for i, binf in enumerate(bin_files):
+        Disassembler(os.path.join(bin_path, binf)).disassemble_to_file(os.path.join(diss_path, str(i)+"-"+binf+".json"))
+
+    ModelCreator(diss_path, map_path, model_file_path).train_model()
+
+
+
+
+
 def create_model_thr(model_id):
     db = DB()
     model = db.get_model_by_id(model_id)
@@ -40,7 +59,7 @@ def create_model_thr(model_id):
 
     for i, binf in enumerate(bin_files):
         db.job_add_log(job.id, "Disassembling file {}/{}".format(len(bin_files), i+1))
-        Disassembler(os.path.join(bin_path, binf)).disassemble_to_file(os.path.join(diss_path, str(i)+".json"))
+        Disassembler(os.path.join(bin_path, binf)).disassemble_to_file(os.path.join(diss_path, str(i)+"-"+binf+".json"))
 
     db.job_add_log(job.id, "Creating map")
     MapCreator(diss_path, map_path).create_map()
