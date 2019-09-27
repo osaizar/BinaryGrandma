@@ -13,7 +13,16 @@ export default class NavbarComponent extends Component {
   render(){
     return(
     <Navbar bg="light" expand="lg">
-    <Navbar.Brand href="/">Binary Grandma</Navbar.Brand>
+    <Navbar.Brand href="/">
+      <Image
+        alt=""
+        src="/img/logo.png"
+        width="35"
+        height="35"
+        className="d-inline-block align-top"
+      />
+      {' Binary Grandma'}
+    </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
