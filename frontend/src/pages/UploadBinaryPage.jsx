@@ -20,7 +20,7 @@ export default class UploadBinaryPage extends Component {
     this.state = {
       selectedFile : null,
       name : "",
-      state : "start",
+      state : "uploading",
       binary_id : null
     }
   }
